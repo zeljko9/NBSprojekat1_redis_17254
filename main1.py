@@ -35,7 +35,7 @@ def pretplata():
 
 @app.route('/DePretplata',methods=['POST'])
 @cross_origin()
-def pretplata():
+def depretplata():
     poruka=flask.request.json
     baza.de_pretplata((poruka['mejl']))
     print(poruka)
