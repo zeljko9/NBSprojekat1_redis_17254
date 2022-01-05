@@ -1,0 +1,6 @@
+.naslovna{
+    display: flex;
+    border:  1px solid black;
+    flex-direction: column;
+    flex-basis: 200px;
+}
