@@ -12,7 +12,7 @@ from flask_cors import CORS
 app=Flask(__name__)
 cors = CORS(app)
 baza=b.Baza()
-baza.resetuj()
+#baza.resetuj()
 print(__name__)
 
 @app.route('/')
@@ -23,7 +23,7 @@ def main():
 @cross_origin()
 def pretplata():
     poruka=flask.request.json
-    res=baza.pretplati_se((poruka['ime'], poruka['mejl']), list(poruka['zanrovi'].split(',')))
+    res=baza.pretplati_se((poruka['ime'], poruka['mejl']), poruka['zanrovi'].split(','))
     print(poruka)
 
     response= app.response_class(
@@ -37,7 +37,8 @@ def pretplata():
 @cross_origin()
 def depretplata():
     poruka=flask.request.json
-    baza.de_pretplata((poruka['mejl']))
+    if not baza.de_pretplata((poruka['mejl'])):
+        return flask.json.dumps({'success':False}), 500, {'ContentType':'application/json'} 
     print(poruka)
     return flask.json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
 

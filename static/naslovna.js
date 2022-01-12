@@ -48,9 +48,9 @@ export class Naslovna{
                 alert("Unesite validan mejl.");
             }
 
-            const regex2=/[a-zA-Z]+,/g
+            const regex2=/[a-zA-Z]+,[a-zA-Z]/g
             if(!tb3.value.match(regex2)){
-                alert("Format zanrova je: zanr1,zanr2,zanr3,");
+                alert("Format zanrova je: zanr1,zanr2,zanr3");
             }
 
             fetch("http://localhost:5000/PretplatiSe", {
@@ -111,17 +111,17 @@ export class Naslovna{
             }).then(p => {
                 if (p.ok) {
                     Dmejl.value="";
-                    alert("Uspesna pretplata!");
+                    alert("Uspesna de-pretplata!");
                 }
             }).catch(p => {
-                alert("Proverite mejl adresu jos jedno, da li ste sigurni da ste vec pretplaceni?");
+                alert("Proverite mejl adresu jos jednom, da li ste sigurni da ste vec pretplaceni?");
             });
 
         }
 
         this.kontejner.appendChild(Dlabela);
         this.kontejner.appendChild(Dmejl);
-
+        this.kontejner.appendChild(Ddugme);
 
 
 

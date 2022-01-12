@@ -25,17 +25,19 @@ class Baza:
             if not self.r.sismember('zanrovi', z) and z != '':
                 self.r.sadd('zanrovi',z)            #dodavanje zanrova u zanrove ako ne postoji
             if z != '':    
-                a=z+','
+                a=a+z+','
         dct['zanrovi']=a
         self.r.hmset(korisnik[1],dct)  
         return 'dodato'             #dodavanje zanrova u pretplacene zanrove za korisnika
 
     def de_pretplata(self, korisnik):
+        ho=self.vrati_korisnike()
+        if korisnik not in self.vrati_korisnike():
+            return False
         self.r.srem('korisnici',korisnik)
-        pom=self.r.hmget(korisnik, 'zanrovi')
-        pom=str(pom).plit(',')
+        pomm=self.r.hget(korisnik, 'zanrovi')
+        pom=str(pomm).split(',')
         newpom=list()
-        self.r.hdel(korisnik)
         self.r.delete(korisnik)
         korisnici=self.r.smembers('korisnici')
         for k in korisnici:
@@ -45,6 +47,7 @@ class Baza:
         for p in pom:
             if p not in newpom:
                 self.r.srem('zanrovi', p)
+        return True
 
     def azuriraj_korisnika(self, korisnik, zanrovi):
         self.r.hset(korisnik, 'zanrovi', zanrovi)
